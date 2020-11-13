@@ -6,7 +6,8 @@ const helmet = require("helmet");
 const { NODE_ENV } = require("./config");
 const app = express();
 const LoginRouter = require("./Routers/loginRouter");
-const UserRouter = require("./Routers/usersRouter");
+const UsersRouter = require("./Routers/usersRouter");
+const ProvidersRouter = require("./Routers/providersRouter");
 const morganOption = NODE_ENV === "production" ? "tiny" : "common";
 
 app.use(morgan(morganOption));
@@ -17,9 +18,9 @@ app.get("/", (req, res) => {
   res.send("Hello, Nail Connection!");
 });
 
-app.use("/users", UserRouter);
+app.use("/users", UsersRouter);
 app.use("/login", LoginRouter);
-
+app.use("/providers", ProvidersRouter);
 app.use(function errorHandler(error, req, res, next) {
   let response;
   if (NODE_ENV === "production") {
