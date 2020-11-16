@@ -32,5 +32,7 @@ DELETE CASCADE,
 providers_id INTEGER REFERENCES providers
 (id) ON
 DELETE CASCADE NOT NULL,
-message_date DATE
+message_date TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+message VARCHAR(255)
+
 );

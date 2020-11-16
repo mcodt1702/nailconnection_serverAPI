@@ -10,6 +10,7 @@ serializeProvider = (provider) => ({
   name: provider.name,
   email: provider.email,
   password: provider.password,
+  phone: provider.phone,
   zip: provider.zip,
 });
 
@@ -17,6 +18,7 @@ serializeProvider2 = (provider) => ({
   name: provider.name,
   email: provider.email,
   description: provider.description,
+  phone: provider.phone,
   zip: provider.zip,
 });
 
@@ -30,11 +32,11 @@ ProvidersRouter.route("/")
   })
 
   .post(jsonParser, async (req, res, next) => {
-    const { name, address, zip, phone, email, type } = req.body;
+    const { name, phone, email, zip, description } = req.body;
     const hashedpassword = await bcrypt.hash(req.body.password, 10);
     password = hashedpassword;
 
-    const newProvider = { name, address, zip, phone, email, password, type };
+    const newProvider = { name, phone, email, zip, description, password };
 
     for (const [key, value] of Object.entries(newProvider)) {
       if (value == null) {
@@ -49,7 +51,7 @@ ProvidersRouter.route("/")
         res
           .status(201)
           .location(path.posix.join(req.originalUrl, `/${provider.id}`))
-          .json(serializeConsumer(provider));
+          .json(serializeProvider(provider));
       })
       .catch(next);
   });
