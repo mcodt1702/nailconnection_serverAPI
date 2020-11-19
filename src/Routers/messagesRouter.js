@@ -46,8 +46,22 @@ MessagesRouter.route("/")
       })
       .catch(next);
   });
-// UserRouter.route("/name").get(requireAuth, (req, res, next) => {
-//   res.json(req.user);
-// });
+
+MessagesRouter.route("/conversation").get(
+  requireAuth,
+  jsonParser,
+  (req, res, next) => {
+    const id = req.user.id;
+    const { providers_id } = req.body;
+    let users = { users_id: id };
+    let providers = { providers_id };
+    console.log(providers_id);
+    MessagesService.getConversation(req.app.get("db"), users)
+      .then((user) => {
+        res.json(user.map(serializeMessages));
+      })
+      .catch(next);
+  }
+);
 
 module.exports = MessagesRouter;

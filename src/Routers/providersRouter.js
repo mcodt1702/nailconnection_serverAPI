@@ -15,6 +15,7 @@ serializeProvider = (provider) => ({
 });
 
 serializeProvider2 = (provider) => ({
+  id: provider.id,
   name: provider.name,
   email: provider.email,
   description: provider.description,

@@ -14,6 +14,13 @@ const MessagesService = {
         return rows[0];
       });
   },
+
+  getConversation(knex, users) {
+    return knex
+      .select("*")
+      .from("messages")
+      .where((user_id = users));
+  },
 };
 
 module.exports = MessagesService;
