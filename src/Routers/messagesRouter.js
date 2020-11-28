@@ -52,10 +52,10 @@ MessagesRouter.route("/conversation").get(
   jsonParser,
   (req, res, next) => {
     const id = req.user.id;
-    const { providers_id } = req.body;
+    //const { providers_id } = req.body;
     let users = { users_id: id };
-    let providers = { providers_id };
-    console.log(providers_id);
+    //let providers = { providers_id };
+
     MessagesService.getConversation(req.app.get("db"), users)
       .then((user) => {
         res.json(user.map(serializeMessages));

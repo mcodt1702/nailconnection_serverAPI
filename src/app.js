@@ -9,6 +9,7 @@ const LoginRouter = require("./Routers/loginRouter");
 const UsersRouter = require("./Routers/usersRouter");
 const ProvidersRouter = require("./Routers/providersRouter");
 const MessagesRouter = require("./Routers/messagesRouter");
+const VenuesLoginRouter = require("./Routers/venuesLoginRouter");
 const morganOption = NODE_ENV === "production" ? "tiny" : "common";
 
 app.use(morgan(morganOption));
@@ -19,6 +20,7 @@ app.get("/", (req, res) => {
   res.send("Hello, Nail Connection!");
 });
 app.use("/messages", MessagesRouter);
+app.use("/loginve", VenuesLoginRouter);
 app.use("/users", UsersRouter);
 app.use("/login", LoginRouter);
 app.use("/providers", ProvidersRouter);

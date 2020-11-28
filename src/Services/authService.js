@@ -8,7 +8,7 @@ const AuthService = {
   },
 
   getUserWithUserNameVenues(db, email) {
-    return db("venues").where({ email }).first();
+    return db("providers").where({ email }).first();
   },
 
   comparePasswords(password, hash) {

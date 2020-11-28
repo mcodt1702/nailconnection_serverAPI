@@ -34,7 +34,7 @@ ProvidersRouter.route("/")
 
   .post(jsonParser, async (req, res, next) => {
     const { name, phone, email, zip, description } = req.body;
-    const hashedpassword = await bcrypt.hash(req.body.password, 10);
+    const hashedpassword = await bcrypt.hash(req.body.password, 12);
     password = hashedpassword;
 
     const newProvider = { name, phone, email, zip, description, password };
