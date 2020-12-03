@@ -29,10 +29,10 @@ authRouterVenues.post("/", jsonParser, (req, res, next) => {
           });
 
         const sub = dbUser.email;
-        const payload = { user_id: dbUser.id };
+        const payload = { providers_id: dbUser.id };
         res.send({
           authToken: AuthService.createJwt(sub, payload),
-          user_id: dbUser.id,
+          providers_id: dbUser.id,
         });
       })
       .catch(next);

@@ -4,7 +4,7 @@ const MessagesRouter = express.Router();
 const jsonParser = express.json();
 const path = require("path");
 const bcrypt = require("bcryptjs");
-const { requireAuth } = require("../Auth/jwtAuthorization");
+const { requireAuth, requireAuthVenues } = require("../Auth/jwtAuthorization");
 
 serializeMessages = (messages) => ({
   users_id: messages.users_id,
@@ -57,6 +57,23 @@ MessagesRouter.route("/conversation").get(
     //let providers = { providers_id };
 
     MessagesService.getConversation(req.app.get("db"), users)
+      .then((user) => {
+        res.json(user.map(serializeMessages));
+      })
+      .catch(next);
+  }
+);
+
+MessagesRouter.route("/vconver").get(
+  requireAuthVenues,
+  jsonParser,
+  (req, res, next) => {
+    const id = req.user.id;
+    //const { providers_id } = req.body;
+    let users = { users_id: id };
+    let providers = { providers_id: id };
+
+    MessagesService.getVenueConversation(req.app.get("db"), providers)
       .then((user) => {
         res.json(user.map(serializeMessages));
       })

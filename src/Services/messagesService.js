@@ -21,6 +21,13 @@ const MessagesService = {
       .from("messages")
       .where((user_id = users));
   },
+
+  getVenueConversation(knex, providers) {
+    return knex
+      .select("*")
+      .from("messages")
+      .where((providers_id = providers));
+  },
 };
 
 module.exports = MessagesService;
