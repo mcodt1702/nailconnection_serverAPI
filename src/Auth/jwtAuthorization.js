@@ -44,11 +44,11 @@ function requireAuthVenues(req, res, next) {
     const payload = AuthService.verifyJwt(bearerToken);
 
     AuthService.getUserWithUserNameVenues(req.app.get("db"), payload.sub)
-      .then((user) => {
-        if (!user)
+      .then((provider) => {
+        if (!provider)
           return res.status(401).json({ error: "Unauthorized request" });
 
-        req.provider = user;
+        req.provider = provider;
         next();
       })
       .catch((err) => {

@@ -21,7 +21,6 @@ const MessagesService = {
       .from("messages")
       .where((user_id = users));
   },
-
   getVenueConversation(knex, providers) {
     return knex
       .select("*")

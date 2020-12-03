@@ -5,6 +5,7 @@ const jsonParser = express.json();
 const path = require("path");
 const bcrypt = require("bcryptjs");
 const { requireAuth, requireAuthVenues } = require("../Auth/jwtAuthorization");
+const ProvidersService = require("../Services/providersService");
 
 serializeMessages = (messages) => ({
   users_id: messages.users_id,
@@ -68,17 +69,25 @@ MessagesRouter.route("/vconver").get(
   requireAuthVenues,
   jsonParser,
   (req, res, next) => {
-    const id = req.user.id;
-    //const { providers_id } = req.body;
-    let users = { users_id: id };
+    const id = req.provider.id;
+
     let providers = { providers_id: id };
 
     MessagesService.getVenueConversation(req.app.get("db"), providers)
+      .then((providers) => {
+        res.json(providers.map(serializeMessages));
+      })
+      .catch(next);
+  }
+);
+MessagesRouter.route("/messagesVen").get(
+  requireAuthVenues,
+  (req, res, next) => {
+    MessagesService.getAllmessages(req.app.get("db"))
       .then((user) => {
         res.json(user.map(serializeMessages));
       })
       .catch(next);
   }
 );
-
 module.exports = MessagesRouter;
