@@ -80,14 +80,36 @@ MessagesRouter.route("/vconver").get(
       .catch(next);
   }
 );
-MessagesRouter.route("/messagesVen").get(
-  requireAuthVenues,
-  (req, res, next) => {
-    MessagesService.getAllmessages(req.app.get("db"))
+MessagesRouter.route("/messagesVen")
+  .get(requireAuthVenues, (req, res, next) => {
+    MessagesService.getVenueConversation(req.app.get("db"))
       .then((user) => {
         res.json(user.map(serializeMessages));
       })
       .catch(next);
-  }
-);
+  })
+  .post(requireAuthVenues, jsonParser, async (req, res, next) => {
+    const { users_id, message } = req.body;
+
+    const providers_id = req.provider.id;
+
+    const newMessage = { users_id, providers_id, message };
+
+    for (const [key, value] of Object.entries(newMessage)) {
+      if (value == null) {
+        return res
+          .status(400)
+          .json({ error: { message: `Missing '${key}' in request body` } });
+      }
+    }
+
+    MessagesService.insertMessages(req.app.get("db"), newMessage)
+      .then((messa) => {
+        res
+          .status(201)
+          .location(path.posix.join(req.originalUrl, `/${messa.id}`))
+          .json(serializeMessages(messa));
+      })
+      .catch(next);
+  });
 module.exports = MessagesRouter;
