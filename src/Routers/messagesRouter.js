@@ -89,11 +89,11 @@ MessagesRouter.route("/messagesVen")
       .catch(next);
   })
   .post(requireAuthVenues, jsonParser, async (req, res, next) => {
-    const { users_id, message } = req.body;
+    const { users_id, message, sender } = req.body;
 
     const providers_id = req.provider.id;
 
-    const newMessage = { users_id, providers_id, message };
+    const newMessage = { users_id, providers_id, message, sender };
 
     for (const [key, value] of Object.entries(newMessage)) {
       if (value == null) {

@@ -32,7 +32,7 @@ DELETE CASCADE,
 providers_id INTEGER REFERENCES providers
 (id) ON
 DELETE CASCADE NOT NULL,
-sender VARCHAR(3),
+sender VARCHAR(20),
 message_date TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 message VARCHAR(255)
 
