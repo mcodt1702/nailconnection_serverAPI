@@ -12,6 +12,7 @@ serializeMessages = (messages) => ({
   providers_id: messages.providers_id,
   message: messages.message,
   message_date: messages.message_date,
+  sender: messages.sender,
 });
 
 MessagesRouter.route("/")
